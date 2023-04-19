@@ -17,26 +17,26 @@ TARGET_FILE_NAME = "imports-85.data"
 
 TARGET_DATA = DATA_FILE + TARGET_FILE_NAME
 
-def get_data() -> List:
+
+COLUMN_NAMES = "symboling,normalized-losses,make,fuel-type,aspiration,num-of-doors,body-style,drive-wheels,engine-location,wheel-base,length,width,height,curb-weight,engine-type,num-of-cylinders,engine-size,fuel-system,bore,stroke,compression-ratio,horsepower,peak-rpm,city-mpg,highway-mpg,price"
+
+def get_data(cols: list) -> List:
     # iloc --> int index 
     # loc --> label indexing
 
     # names --> heading of CSV file
-    names = "symboling,normalized-losses,make,fuel-type,aspiration,num-of-doors,body-style,drive-wheels,engine-location,wheel-base,length,width,height,curb-weight,engine-type,num-of-cylinders,engine-size,fuel-system,bore,stroke,compression-ratio,horsepower,peak-rpm,city-mpg,highway-mpg,price"
-    file = pd.read_csv(TARGET_DATA, names=names.split(","))
-    test = 0
-    cols = file.columns[0:4]
     
     # BTW, formulate values into 0-1
     # 3
+    tor : list = []
     for i in range(1,205):
         pair = []
         for word in cols:
             pair.append(file.iloc[i].at[word])
         test_case = [file.iloc[i].at[file.columns[8]]]
-        tuple_test = (pair,test_case)
-        print(tuple_test)
-
+        tuple_test : tuple = (pair,test_case)
+        tor.append(tuple_test)
+    return tor
 
 def format_to_neural(value, possible_values : list):
     # Divide value or value position by total amount of possible values.
@@ -120,4 +120,5 @@ def run_test(hidden_nodes : int, data : List) -> None:
     new_t = time.time()
 
 if __name__ == "__main__":
-    get_data()
+    file = pd.read_csv(TARGET_DATA, names=COLUMN_NAMES.split(","))
+    print(get_data(file.columns[0:4]))
