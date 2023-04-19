@@ -2,6 +2,7 @@ import time
 from neural import NeuralNet
 from typing import List, Tuple, Any
 import pandas as pd
+import numpy as np
 
 """
 Import data into a list.
@@ -35,6 +36,82 @@ def get_data() -> List:
         test_case = [file.iloc[i].at[file.columns[8]]]
         tuple_test = (pair,test_case)
         print(tuple_test)
+
+
+def format_to_neural(value, possible_values : list):
+    # Divide value or value position by total amount of possible values.
+    # ie: for symboling, -3 is 1 of 6 possible values.
+    # so convert -3 to 1 and then divide by 6.
+    
+    #Value is a int
+    if type(value) == int:
+        # do int thing
+        # min and max value must be in a tuple.
+        if type(possible_values[0]) != tuple:
+            print(f"ERROR @ format_to_neural: Possible value for number is not in a tuple!")
+            exit
+        else:
+            difference = abs(possible_values[0][1] - possible_values[0][1])
+            new_number = abs(value) - possible_values[0][1] # formatting
+            return (new_number / difference)
+    
+    #Value is a string
+    elif type(value) == str:
+        # do string thing
+        length = len(possible_values)
+        index = possible_values.index(value)
+        return (index/length)
+    else:
+        print(f"ERROR @ format_to_neural: can't process value \"{value}\"")
+        exit
+
+def format_from_neural(value, possible_values : list):
+    # Find nearest value, based on possible values.
+    # so convert -3 to 1 and then divide by 6.
+    if type(possible_values[0]) == int:
+        # do int thing
+        # min and max value must be in a tuple.
+        if type(possible_values[0]) != tuple:
+            print(f"ERROR @ format_to_neural: Possible value for number is not in a tuple!")
+            exit
+        else:
+            difference = abs(possible_values[0][1] - possible_values[0][1])
+            new_number = abs(value) - possible_values[0][1] # formatting
+            return (new_number / difference)
+    
+    #Value is a string
+    elif type(possible_values[0]) == str:
+        # do string thing
+        length = len(possible_values)
+        index = value * length
+        return possible_values[closest_number((index/length), convert_strings_to_values(possible_values))]
+    else:
+        print(f"ERROR @ format_to_neural: can't process value \"{value}\"")
+        exit
+
+def closest_number(value, possible_values : list):
+    # I bailed out on this. (help)
+    arr = np.asarray(possible_values)
+
+    i = (np.abs(arr - value)).argmin()
+
+    return arr[i]
+
+def convert_strings_to_values(string_list: list) -> list:
+    # Convert the string to a list of values.
+    index = 0
+    tor = []
+    for value in string_list:
+        tor.append(index)
+        index+=1
+    return tor
+
+def convert_value_to_string(int_list: list, string_list: list) -> list:
+    # Convert the ints to a list of values
+    tor = []
+    for number in int_list:
+        tor.append(string_list[number])
+    return tor
 
 def run_test(hidden_nodes : int, data : List) -> None:
     net = NeuralNet(2,hidden_nodes,1)
