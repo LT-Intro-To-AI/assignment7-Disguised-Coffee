@@ -20,6 +20,7 @@ TARGET_DATA = DATA_FILE + TARGET_FILE_NAME
 
 COLUMN_NAMES = "symboling,normalized-losses,make,fuel-type,aspiration,num-of-doors,body-style,drive-wheels,engine-location,wheel-base,length,width,height,curb-weight,engine-type,num-of-cylinders,engine-size,fuel-system,bore,stroke,compression-ratio,horsepower,peak-rpm,city-mpg,highway-mpg,price"
 
+
 def get_data(cols: list) -> List:
     # iloc --> int index 
     # loc --> label indexing
@@ -32,11 +33,18 @@ def get_data(cols: list) -> List:
     for i in range(1,205):
         pair = []
         for word in cols:
+            # if word in COLUMN_VALUES:
+            #     pair.append(convert_strings_to_values(file.iloc[i].at[word]),)
             pair.append(file.iloc[i].at[word])
         test_case = [file.iloc[i].at[file.columns[8]]]
         tuple_test : tuple = (pair,test_case)
         tor.append(tuple_test)
     return tor
+
+def find_all_string_values():
+    #Find all values within column and assign to a string
+    pass
+
 
 def format_to_neural(value, possible_values : list):
     # Divide value or value position by total amount of possible values.
@@ -121,4 +129,5 @@ def run_test(hidden_nodes : int, data : List) -> None:
 
 if __name__ == "__main__":
     file = pd.read_csv(TARGET_DATA, names=COLUMN_NAMES.split(","))
-    print(get_data(file.columns[0:4]))
+    # parse_data = get_data(file.columns[0:4])
+    print(file["fuel-type"].shape)
