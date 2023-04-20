@@ -3,6 +3,7 @@ from neural import NeuralNet
 from typing import List, Tuple, Any
 import pandas as pd
 import numpy as np
+import neural_net_UCI_data as nnd
 
 """
 Import data into a list.
@@ -47,13 +48,14 @@ def format_to_neural(value, possible_values : list):
     if type(value) == int:
         # do int thing
         # min and max value must be in a tuple.
-        if type(possible_values[0]) != tuple:
-            print(f"ERROR @ format_to_neural: Possible value for number is not in a tuple!")
-            exit
-        else:
-            difference = abs(possible_values[0][1] - possible_values[0][1])
-            new_number = abs(value) - possible_values[0][1] # formatting
-            return (new_number / difference)
+        # if type(possible_values[0]) != tuple:
+        #     print(f"ERROR @ format_to_neural: Possible value for number is not in a tuple!")
+        #     exit
+        # else:
+        #     difference = abs(possible_values[0][1] - possible_values[0][1])
+        #     new_number = abs(value) - possible_values[0][1] # formatting
+        #     return (new_number / difference)
+        nnd.normalize()
     
     #Value is a string
     elif type(value) == str:
@@ -99,12 +101,7 @@ def closest_number(value, possible_values : list):
 
 def convert_strings_to_values(string_list: list) -> list:
     # Convert the string to a list of values.
-    index = 0
-    tor = []
-    for value in string_list:
-        tor.append(index)
-        index+=1
-    return tor
+    return [i for i in range(len(string_list))]
 
 def convert_value_to_string(int_list: list, string_list: list) -> list:
     # Convert the ints to a list of values
