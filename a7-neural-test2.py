@@ -1,5 +1,7 @@
 from typing import Tuple, List
 
+from sklearn import train_test_split
+
 DATA_FILE = "testing_data/imports-85.data"
 
 
