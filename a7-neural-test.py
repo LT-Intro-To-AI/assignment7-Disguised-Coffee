@@ -19,10 +19,10 @@ TARGET_FILE_NAME = "imports-85.data"
 TARGET_DATA = DATA_FILE + TARGET_FILE_NAME
 
 
-COLUMN_NAMES = "symboling,normalized-losses,make,fuel-type,aspiration,num-of-doors,body-style,drive-wheels,engine-location,wheel-base,length,width,height,curb-weight,engine-type,num-of-cylinders,engine-size,fuel-system,bore,stroke,compression-ratio,horsepower,peak-rpm,city-mpg,highway-mpg,price"
+COLUMN_NAMES = "symboling,normalized-losses,make,fuel-type,aspiration,num-of-doors,body-style,drive-wheels,engine-location,wheel-base,length,width,height,curb-weight,engine-type,num-of-cylinders,engine-size,fuel-system,bore,stroke,compression-ratio,horsepower,peak-rpm,city-mpg,highway-mpg,price".split(",")
 
 
-def get_data(cols: list) -> List:
+def get_data(cols: list, test_case: int) -> List:
     # iloc --> int index 
     # loc --> label indexing
 
@@ -37,7 +37,7 @@ def get_data(cols: list) -> List:
             # if word in COLUMN_VALUES:
             #     pair.append(convert_strings_to_values(file.iloc[i].at[word]),)
             pair.append(file.iloc[i].at[word])
-        test_case = [file.iloc[i].at[file.columns[8]]]
+        test_case = [file.iloc[i].at[file.columns[test_case]]]
         tuple_test : tuple = (pair,test_case)
         tor.append(tuple_test)
     return tor
@@ -125,6 +125,7 @@ def run_test(hidden_nodes : int, data : List) -> None:
     new_t = time.time()
 
 if __name__ == "__main__":
-    file = pd.read_csv(TARGET_DATA, names=COLUMN_NAMES.split(","))
+    file = pd.read_csv(TARGET_DATA, names=COLUMN_NAMES)
     # parse_data = get_data(file.columns[0:4])
-    print(file["fuel-type"].shape)
+    print(COLUMN_NAMES[0:2])
+    print(get_data(COLUMN_NAMES[0:2],2))
