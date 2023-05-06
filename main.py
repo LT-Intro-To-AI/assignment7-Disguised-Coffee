@@ -10,6 +10,9 @@ DATA_FILE = "testing_data/imports-85.data"
 TEST_CASE_FILE = "testing_data/imports-small.data"
 """Testing file with example test cases"""
 
+
+# Later on, put outputs and inputs in same list.
+# For now, keep like this.
 CONVERSION_INPUTS : List = []
 """Where inputs exist to be converted"""
 
@@ -320,8 +323,17 @@ def reset_conversions():
     WRITEN_TO_CONVERSION = False
 
 def run_neural_net(inputs: List, outputs: List, hidden_nodes: int, test_cases: List = [TEST_CASE_FILE], rounding_factor: int = 3, iters :int = 1000, print_inter = 100, learning_rate = 0.5) -> None:
-    """
-    Runs the neural net program.
+    """Runs the neural net program.
+
+     Args:
+        inputs - list of column values to search to retain as inputs for neural net
+        inputs - list of column values to search to retain as outputs for neural net
+        hidden_node - int value of hidden nodes for neural net
+        test_cases - list of file names to analyze with neural net
+        rounding_factor - number of digits to round floats by
+        iters - number of iterations
+        print_inter - printing iterations
+        learning_rate - rate at which neural net learns by
 
     ~!~ Just puts some input values and desire outputs, and get something! ~!~
     """
@@ -435,17 +447,18 @@ if __name__ == "__main__":
     # and make a neural net!
     # Arguably one of the best programs I've made.
 
-    # Main Neurals
+    # Main neural nets
     # > Make, Num-of-doors,body-style V. symboling and normalized-losses
     run_neural_net([2,5,6],[0,1],10,[TEST_CASE_FILE])
-    run_neural_net([0,1],[2,5,6],5,[TEST_CASE_FILE]) # Reversed
+    run_neural_net([0,1],[2,5,6],20,[TEST_CASE_FILE]) # Reversed
 
-    # > engine specs(size, fuel-sys, num-of-cylinders, engine-type) and gas milage of that car
+    # > engine specs(fuel-type, aspiration, engine-size, fuel-sys, num-of-cylinders, engine-type,bore,stroke,compression-ratio,horsepower, peak-rpm) and gas milage of that car
 
     #> body-style and dimension of the car affects the rate in which cars lose their value.
 
-    #Extras: 
+    # Extras (Not necessary to run): 
     # - Engine-location w/ Drive-wheels and curb-weight Vs gas milage
     # - Engine-location w/ Drive-wheel and curb-weight V symboling (insurance probability risk)
-    # - Engine type V. MPG
+    
+    # - engine specs V. horsepower
     # - engine specs(all) and car price
